@@ -1,10 +1,10 @@
 # automatically create the appropriately-named resource group in Azure
 resource "azurerm_resource_group" "applications" {
-  for_each = local.application_environments
+  for_each = local.application_environment_hubs
 
-  name     = "${var.resource_prefix}${each.key}"
-  location = data.azurerm_resource_group.zone.location
-  #location = local.hubs[each.value.env] each.value.azure_location
+  name = "${var.resource_prefix}${each.key}"
+  #location = data.azurerm_resource_group.zone.location
+  location = each.value.azure_location
 
   tags = {
     application = each.value.app
