@@ -120,17 +120,6 @@ locals {
   # This area is used to merge the applications with defaults and put it in a format 
   # more easily consumable by Terraform resources.
   ##
-  application_environments = { for ae in flatten([
-    for appk, appv in local.applications : [
-      # application-environment > application > application-environment defaults > application defaults
-      for envk, envv in appv.environments : merge(local.application_defaults, local.application_defaults.environments[envk], appv, envv, {
-        app          = appk
-        env          = envk
-        environments = null # an environment should not have visibility to the other environments of its app
-      })
-    ]
-  ]) : "${ae.app}-${ae.env}" => ae }
-
   application_environment_hubs = { for aeh in flatten([
     for appk, appv in local.applications : [
       for envk, envv in appv.environments : [
