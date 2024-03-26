@@ -100,7 +100,6 @@ locals {
   ##
   application_defaults = {
     terraform_version = "1.4.6"
-    azure_location    = "eastus"
     environments = {
       development = {
         branch = "main"
@@ -131,6 +130,19 @@ locals {
       })
     ]
   ]) : "${ae.app}-${ae.env}" => ae }
+
+  application_environment_hubs = { for aeh in flatten([
+    for appk, appv in local.applications : [
+      for envk, envv in appv.environments : [
+        for hubk, hubv in try(envv.hubs, [for hubn in local.hubs[envk] : hubn]) : merge(local.application_defaults, local.application_defaults.environments[envk], appv, envv, hubv, {
+          app          = appk
+          env          = envk
+          hub          = hubk
+          environments = null # an environment should not have visibility to the other environments of its app
+        })
+      ]
+    ]
+  ]) : "${aeh.app}-${aeh.env}-${aeh.hub}" => aeh }
 }
 
 # resource group created by master; used for zone-specific resources

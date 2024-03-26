@@ -4,7 +4,7 @@ resource "azurerm_resource_group" "applications" {
 
   name     = "${var.resource_prefix}${each.key}"
   location = data.azurerm_resource_group.zone.location
-  #location = each.value.azure_location
+  #location = local.hubs[each.value.env] each.value.azure_location
 
   tags = {
     application = each.value.app
