@@ -134,7 +134,7 @@ locals {
   application_environment_hubs = { for aeh in flatten([
     for appk, appv in local.applications : [
       for envk, envv in appv.environments : [
-        for hubk, hubv in try(envv.hubs, [for hubn in local.hubs[envk] : hubn]) : merge(local.application_defaults, local.application_defaults.environments[envk], appv, envv, hubv, {
+        for hubk, hubv in try(envv.hubs, local.hubs[envk]) : merge(local.application_defaults, local.application_defaults.environments[envk], appv, envv, hubv, {
           app          = appk
           env          = envk
           hub          = hubk
