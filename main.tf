@@ -25,6 +25,8 @@ locals {
     exampleapp1 = {
       cost_center = "47216" # default cost center for all environments
       owner       = "jdoe@example.com"
+      source      = "tf-demo-exampleapp1"
+
       environments = {
         development = {
           name = "Example Application 1 Development"
