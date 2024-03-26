@@ -19,8 +19,3 @@ variable "zone_resource_group_name" {
   type        = string
   description = "Name of zone resource group."
 }
-
-variable "zone_resource_group_location" {
-  type        = string
-  description = "Location of zone resource group."
-}
