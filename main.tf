@@ -37,6 +37,17 @@ locals {
         }
       }
     }
+    kellyapp = {
+      cost_center = "65487"
+      owner       = "kellystuard@example.com"
+      source      = "tf-demo-kellyapp"
+
+      environments = {
+        development = {
+          name = "Kelly Rules"
+        }
+      }
+    }
   }
 
   ##
